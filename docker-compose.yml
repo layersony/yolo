@@ -1,0 +1,56 @@
+services:
+  # MongoDB Service
+  mongodb:
+    image: mongo:7
+    container_name: yolo-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: yolo
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    networks:
+      - yolo-network
+
+
+  # Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: yolo-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGODB_URI=mongodb://mongodb:27017/yolo
+      - NODE_ENV=production
+    networks:
+      - yolo-network
+
+  # Client Service
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: yolo-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_URL=http://backend:5000
+    depends_on:
+      - backend
+    networks:
+      - yolo-network
+
+volumes:
+  mongodb_data:
+  mongodb_config:
+
+networks:
+  yolo-network:
+    driver: bridge
