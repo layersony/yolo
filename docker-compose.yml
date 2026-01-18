@@ -22,13 +22,16 @@ services:
 
   # Backend Service
   backend:
-    image: sammaingi/yolo-backend:1.0.0
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    image: sammaingi/yolo-backend:1.1.2
     container_name: yolo-backend
     restart: unless-stopped
     ports:
-      - "5000:5000"
+      - "5001:5001"
     environment:
-      - PORT=5000
+      - PORT=5001
       - MONGODB_URI=mongodb://mongodb:27017/yolo
       - NODE_ENV=production
     depends_on:
@@ -39,15 +42,18 @@ services:
 
   # Client Service
   frontend:
-    image: sammaingi/frontendd:1.0.0
+    # build:
+    #   context: ./client
+    #   dockerfile: Dockerfile
+    image: sammaingi/yolo-frontend:1.1.0
     container_name: yolo-frontend
     restart: unless-stopped
     ports:
       - "3000:80"
     environment:
-      - REACT_APP_API_URL=http://backend:5000
-    depends_on:
-      - backend
+      - REACT_APP_API_URL=http://backend:5001
+    # depends_on:
+    #   - backend
     networks:
       - yolo-network
 

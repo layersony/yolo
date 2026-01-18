@@ -5,7 +5,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy package.json and package-lock.json first for better layer caching
-COPY package*.json .
+COPY package*.json ./
 
 # Install dependencies using npm ci (clean install for reproducible builds)
 RUN npm ci --omit=dev
@@ -13,10 +13,10 @@ RUN npm ci --omit=dev
 # Copy the rest of the application source code
 COPY . .
 
-# Expose port 5000 for HTTP traffic
-EXPOSE 5000
+# Expose port 5001 for HTTP traffic
+EXPOSE 5001
 
-ENV PORT=5000
+ENV PORT=5001
 
 # Start Application
 CMD ["npm", "start"]

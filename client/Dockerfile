@@ -5,7 +5,7 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 # Copy package.json and package-lock.json first for better layer caching
-COPY package*.json .
+COPY package*.json ./
 
 # Install dependencies using npm ci (clean install for reproducible builds)
 RUN npm ci
