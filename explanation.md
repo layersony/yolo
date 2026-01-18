@@ -41,8 +41,8 @@ Used `npm ci` instead of `npm install` because it's more reliable installs exact
 
 ```dockerfile
 COPY . .
-EXPOSE 5000
-ENV PORT=5000
+EXPOSE 5001
+ENV PORT=5001
 CMD ["npm", "start"]
 ```
 Application source code is copied after dependency installation to maximize cache efficiency.
@@ -93,7 +93,7 @@ ports:
 API endpoint
 ```yaml
 ports:
-  - "5000:5000"
+  - "5001:5001"
 ```
 
 *Frontend Service:*
@@ -120,7 +120,7 @@ Other benefits:
 
 *How it all connects:*
 ```
-Browser → Frontend (hostmachine:80) → Backend (backend:5000) → MongoDB (mongodb:27017)
+Browser → Frontend (hostmachine:80) → Backend (backend:5001) → MongoDB (mongodb:27017)
 ```
 
 ## 4. Volume Management and Data Persistence
@@ -173,14 +173,14 @@ docker-compose ps
 Expected output:
 ```
 NAME            IMAGE           COMMAND                  SERVICE    CREATED         STATUS         PORTS
-yolo-backend    yolo-backend    "docker-entrypoint.s…"   backend    50 minutes ago   Up 50 minutes   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp
+yolo-backend    yolo-backend    "docker-entrypoint.s…"   backend    50 minutes ago   Up 50 minutes   0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp
 yolo-frontend   yolo-frontend   "/docker-entrypoint.…"   frontend   50 minutes ago   Up 50 minutes   0.0.0.0:3000->80/tcp, [::]:3000->80/tcp
 yolo-mongodb    mongo:7         "docker-entrypoint.s…"   mongodb    50 minutes ago   Up 50 minutes  0.0.0.0:27017->27017/tcp, [::]:27017->27017/tcp
 ```
 
 **Functional Testing:**
 - Frontend accessible at http://localhost:80
-- Backend API responsive at http://localhost:5000  
+- Backend API responsive at http://localhost:5001  
 - Database connectivity verified
 - CRUD operations functional
 

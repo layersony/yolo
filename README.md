@@ -46,13 +46,13 @@ It Demonstrates modern web development practices with containerized deployment u
 
 2. **Access the application**
    - Frontend: `http://localhost:80`
-   - Backend API: `http://localhost:5000`
+   - Backend API: `http://localhost:5001`
    - MongoDB: `mongodb://localhost:27017`
 
 The application consists of three services:
 
 - mongodb: MongoDB database server (port 27017)
-- backend: Express.js API server (port 5000)
+- backend: Express.js API server (port 5001)
 - frontend: React development server (port 80)
 
 ### Docker Commands
